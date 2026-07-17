@@ -60,14 +60,13 @@ nothing else. Rejected candidates appear only where they are named as rejected.
   charcoal-black, the cheddar is melted, the onion jam is under it. A few out-of-focus
   fries intrude at the right edge. They are dim and warm and read as part of the plate;
   the vignette takes most of them.
-- **`firebird`** — the shattered buttermilk crust, the point of the card, is legible.
-  This is the least ink-bound photograph of the six: behind the burger on the left is a
-  soft PALE GREY field rather than black, and fries sit in the bottom-right corner. The
-  vignette darkens both without erasing either, so on the grid this card reads a shade
-  lighter than its neighbours. It is the weakest link in the set and it was left alone
-  only because replacing it was outside the scope of this pass — the same
-  shot-on-black rule that condemned the other three applies to it and it is a genuine
-  candidate for a future replacement.
+- **`firebird`** — the shattered buttermilk crust, the point of the card, fills the
+  frame and is fully legible. This frame's bottom-left carried a soft pale-grey
+  plate-edge field and its bottom-right had fries, so at the set's standard crop it
+  read a shade lighter than its neighbours. It is therefore cropped tighter than the
+  rest (zoom 0.70 vs 0.82), which drops both corners; what remains is the golden fried
+  stack, which is intrinsically light-toned food rather than a stray background — an
+  honest brightness, not a backdrop leaking in.
 - Photographs showing bacon were rejected outright wherever it was unmistakable and
   avoidable: `double-flame` (28828556, 10761390), `charcoal-smash` (4628428),
   `cinder-lamb` (34407501, 22119687, 10922929).
