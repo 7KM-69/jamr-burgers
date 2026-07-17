@@ -5,6 +5,7 @@ import { useI18n } from '@/components/providers/I18nProvider';
 import { useCart } from '@/components/cart/CartProvider';
 import { QtyStepper } from '@/components/cart/QtyStepper';
 import { EmberAction } from '@/components/ui/EmberAction';
+import { useToast } from '@/components/ui/EmberToast';
 import type { Product } from '@/lib/types/api';
 import { HeatGauge } from './HeatGauge';
 import { ProductImage } from './ProductImage';
@@ -49,6 +50,7 @@ export function ProductCard({
 }) {
   const { t, lang } = useI18n();
   const { add, qtyOf } = useCart();
+  const { push } = useToast();
 
   const name = lang === 'ar' ? product.name_ar : product.name_en;
   const desc = lang === 'ar' ? product.desc_ar : product.desc_en;
@@ -186,7 +188,17 @@ export function ProductCard({
           ) : (
             <EmberAction
               data-add={product.slug}
-              onClick={() => add(product.id)}
+              onClick={() => {
+                add(product.id);
+                // The button is swapped for the stepper the instant qty leaves 0, so
+                // the confirmation is also what tells the user WHY the control they
+                // just pressed vanished.
+                push({
+                  kind: 'order',
+                  title: t.menu.toast.added(name),
+                  note: t.menu.toast.addedNote,
+                });
+              }}
               aria-label={format(t.menu.a11y.add, { name })}
               className="w-full !py-3.5"
             >

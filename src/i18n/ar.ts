@@ -139,6 +139,12 @@ export const ar: Dictionary = {
     currency: 'ر.س',
     ladder: 'مرتّبة بالسعر. الأرخص ليس الأقل.',
     add: 'أضِف إلى الطلب',
+
+    toast: {
+      dismiss: 'إخفاء',
+      added: (name: string) => `${name} — في طلبك`,
+      addedNote: 'افتح السلة لتغيير العدد.',
+    },
     emptyTitle: 'لا شيء على الشوّاية',
     emptyBody: 'كل البرجرات خارج القائمة الآن. هذا ليس طبيعياً — عاود بعد قليل.',
 

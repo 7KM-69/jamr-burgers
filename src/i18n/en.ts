@@ -187,6 +187,17 @@ export const en = {
      */
     ladder: 'Ordered by price. The cheapest is not the least.',
     add: 'Add to order',
+
+    /**
+     * Confirmations. `added` takes the burger's name so the sentence says WHICH one
+     * — with six cards on a grid, "Added to your order" alone leaves the user
+     * checking the cart to find out what they just tapped.
+     */
+    toast: {
+      dismiss: 'Dismiss',
+      added: (name: string) => `${name} — in your order`,
+      addedNote: 'Open the cart to change the count.',
+    },
     /** The whole menu is delisted. Rare, and it must not look like a design with no data. */
     emptyTitle: 'Nothing on the grill',
     emptyBody: 'Every burger is off the menu right now. That is not normal — try again shortly.',

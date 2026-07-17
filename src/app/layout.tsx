@@ -13,6 +13,7 @@ import { LoaderProvider } from '@/components/providers/LoaderProvider';
 import { SmoothScrollProvider } from '@/components/providers/SmoothScrollProvider';
 import { CartProvider, type CartProduct } from '@/components/cart/CartProvider';
 import { CartDrawer } from '@/components/cart/CartDrawer';
+import { EmberToastProvider } from '@/components/ui/EmberToast';
 import { LoyaltyPanel } from '@/components/loyalty/LoyaltyPanel';
 import { Footer } from '@/components/chrome/Footer';
 import { Loader } from '@/components/chrome/Loader';
@@ -174,6 +175,11 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                   drawer mounted by /menu would vanish the moment you navigated to
                   /spices, taking the order with it. */}
               <CartProvider products={products} catalogOk={catalogOk}>
+                {/* Chrome, for the same reason the drawer is: a confirmation fired by
+                    /menu must outlive a navigation away from /menu. Its one string is
+                    resolved here, on the server, from the language the document is
+                    already committed to — the provider owns no dictionary of its own. */}
+                <EmberToastProvider dismissLabel={dictionaries[lang].menu.toast.dismiss}>
                 <SkipLink />
                 <Loader />
                 <Nav authed={authed} />
@@ -189,6 +195,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                     self-fetching LoyaltyPanel the account page uses, deduped by
                     cache() within a request. */}
                 <CartDrawer loyaltyMeter={<LoyaltyPanel variant="drawer" />} />
+                </EmberToastProvider>
               </CartProvider>
             </SmoothScrollProvider>
           </LoaderProvider>
