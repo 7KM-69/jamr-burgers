@@ -1,0 +1,47 @@
+# ---- dependencies & build output ----
+/node_modules
+/.next/
+/out/
+/build
+*.tsbuildinfo
+next-env.d.ts.bak
+
+# ---- secrets ----
+# .env.local holds the live Supabase URL + publishable key. It must never be
+# committed. The service-role key is not used anywhere in this project and is
+# deliberately absent from .env.local — see .env.example for the shape.
+.env
+.env*.local
+
+# ---- logs ----
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+.next-start*.log
+
+# ---- test & tooling artefacts ----
+/coverage
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+
+# Verification artefacts, not source. Both are produced by scripts in this repo
+# and are meant to be looked at by a human once, then thrown away — screenshots/
+# alone is ~250MB. Regenerate with `node scripts/shot.mjs <slug>`.
+/screenshots/
+/.layer-art-proofs/
+
+# ---- unused art ----
+# Photographic burger layers from an abandoned experiment (see docs/adr/
+# 0001-ingredient-showcase-art.md). Kept on disk because the cut-outs are
+# expensive to reproduce; excluded from the repo because nothing imports them.
+/public/art/burger/photo/
+
+# ---- editor / OS ----
+.DS_Store
+Thumbs.db
+*.pem
+.idea/
+.vscode/

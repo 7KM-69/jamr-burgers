@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 800" width="1000" height="800" role="presentation">
+  <defs>
+    <linearGradient id="bb-heel" x1="0.3" y1="0" x2="0.72" y2="1">
+      <stop offset="0" stop-color="#D9A461"/>
+      <stop offset="0.34" stop-color="#BE8340"/>
+      <stop offset="0.74" stop-color="#96602A"/>
+      <stop offset="1" stop-color="#6E421A"/>
+    </linearGradient>
+    <linearGradient id="bb-cut" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F6DCB0"/>
+      <stop offset="0.45" stop-color="#E4C089"/>
+      <stop offset="1" stop-color="#C79A5E"/>
+    </linearGradient>
+    <linearGradient id="bb-ember" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#FF4D1C" stop-opacity="0.85"/>
+      <stop offset="0.5" stop-color="#FFB020" stop-opacity="0.5"/>
+      <stop offset="1" stop-color="#FF4D1C" stop-opacity="0.8"/>
+    </linearGradient>
+    <filter id="bb-soft" x="-25%" y="-40%" width="150%" height="200%">
+      <feGaussianBlur stdDeviation="16"/>
+    </filter>
+    <filter id="bb-glow" x="-30%" y="-50%" width="160%" height="220%">
+      <feGaussianBlur stdDeviation="8"/>
+    </filter>
+    <clipPath id="bb-clip">
+      <path d="M158 548 C158 528 220 516 320 512 C400 508 600 508 680 512 C780 516 842 528 842 548
+               C842 592 812 626 740 638 C660 652 340 652 260 638 C188 626 158 592 158 548 Z"/>
+    </clipPath>
+  </defs>
+
+  <!-- the plate shadow. this layer is the one that sits on something. -->
+  <ellipse cx="500" cy="654" rx="330" ry="26" fill="#000000" opacity="0.6" filter="url(#bb-soft)"/>
+
+  <!-- heel -->
+  <path d="M158 548 C158 528 220 516 320 512 C400 508 600 508 680 512 C780 516 842 528 842 548
+           C842 592 812 626 740 638 C660 652 340 652 260 638 C188 626 158 592 158 548 Z"
+        fill="url(#bb-heel)"/>
+
+  <g clip-path="url(#bb-clip)">
+    <ellipse cx="380" cy="560" rx="240" ry="60" fill="#E9BE7E" opacity="0.16"/>
+    <ellipse cx="720" cy="612" rx="180" ry="40" fill="#6E421A" opacity="0.22"/>
+    <!-- ember rim-light. the coal is directly below this layer, so it is the
+         brightest bounce on the whole burger. -->
+    <ellipse cx="500" cy="668" rx="330" ry="46" fill="url(#bb-ember)" opacity="0.5" filter="url(#bb-glow)"/>
+  </g>
+
+  <!-- the toasted cut face, where the patty's fat has soaked in -->
+  <path d="M158 546 C158 530 226 518 330 514 C410 511 590 511 670 514 C774 518 842 530 842 546
+           C842 562 760 574 500 574 C240 574 158 562 158 546 Z"
+        fill="url(#bb-cut)"/>
+  <path d="M158 546 C158 562 240 574 500 574 C760 574 842 562 842 546
+           C842 556 838 562 826 566 C740 582 260 582 174 566 C162 562 158 556 158 546 Z"
+        fill="#B98A50" opacity="0.5"/>
+  <!-- the grease line: proof the patty was here -->
+  <path d="M200 540 C300 552 400 556 500 556 C600 556 700 552 800 540"
+        fill="none" stroke="#C08347" stroke-width="4" opacity="0.45" stroke-linecap="round"/>
+  <ellipse cx="420" cy="536" rx="160" ry="8" fill="#FCEBC9" opacity="0.35"/>
+</svg>

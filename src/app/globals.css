@@ -1,0 +1,777 @@
+@import 'tailwindcss';
+
+/* ------------------------------------------------------------------------- *
+ * JAMR — design tokens
+ *
+ * Everything the brand is made of lives here. Components never write a raw
+ * hex value; they consume these through Tailwind utilities (bg-ink, text-ember,
+ * py-section, text-display …) or through var(--token) in the rare custom rule.
+ *
+ * The palette is "embers", not "fire": a charcoal surface that glows from the
+ * inside. Ink dominates; ember and flame are used sparingly and earn attention.
+ * ------------------------------------------------------------------------- */
+
+@theme {
+  /* --- Surface & ink ----------------------------------------------------- */
+  --color-ink: #0b0a09; /* dominant surface, near-black charcoal */
+  --color-ink-deep: #060505; /* below-ink: loader, overlays, footers */
+
+  /* --- Ash: the warm grey ramp for cards, borders and muted type ---------- *
+   * CLAUDE.md writes --ash as #17151300; the trailing 00 is an alpha channel
+   * of zero (fully transparent), which would make every border invisible.
+   * Ruled a typo by the lead: base is #171513. See docs/design-decisions.md.  */
+  --color-ash-100: #12100f; /* deep card, one step off ink */
+  --color-ash-200: #171513; /* ash base — card surface */
+  --color-ash-300: #201d1a; /* raised card / hover surface */
+  --color-ash-400: #2c2825; /* hairline border, default */
+  --color-ash-500: #3d3733; /* border, emphasised */
+  --color-ash-600: #6b615a; /* DECORATIVE ONLY — 3.2:1 on ink, fails AA for text */
+  --color-ash-700: #9a8f86; /* muted body text — 6.3:1 on ink, passes AA */
+
+  /* --- Accents ----------------------------------------------------------- */
+  --color-ember: #ff4d1c; /* primary accent. 5.9:1 on ink — AA for text */
+  --color-ember-dim: #c93a13; /* pressed / held state */
+  --color-flame: #ffb020; /* secondary accent, focus ring. 10.7:1 on ink */
+
+  /* --- Text -------------------------------------------------------------- */
+  --color-bone: #f2ebe3; /* warm off-white, primary text. 16:1 on ink */
+
+  /* --- Type families ------------------------------------------------------ *
+   * Set by next/font in layout.tsx. The Arabic pair overrides these under
+   * [lang='ar'] below — a Latin face must never render Arabic.               */
+  --font-display: var(--font-display-latin);
+  --font-body: var(--font-body-latin);
+
+  /* --- Type scale ---------------------------------------------------------
+   * Display is meant to go genuinely large: 200px at 1440, still 54px at 390. */
+  --text-display: clamp(3.4rem, 13vw, 12.5rem);
+  --text-display--line-height: 0.84;
+  --text-display--letter-spacing: -0.035em;
+
+  --text-h1: clamp(2.5rem, 6.5vw, 6.5rem);
+  --text-h1--line-height: 0.9;
+  --text-h1--letter-spacing: -0.03em;
+
+  --text-h2: clamp(2rem, 4.6vw, 4.25rem);
+  --text-h2--line-height: 0.94;
+  --text-h2--letter-spacing: -0.025em;
+
+  --text-h3: clamp(1.35rem, 2.2vw, 2rem);
+  --text-h3--line-height: 1.1;
+  --text-h3--letter-spacing: -0.015em;
+
+  --text-lead: clamp(1.0625rem, 1.35vw, 1.375rem);
+  --text-lead--line-height: 1.6;
+
+  --text-eyebrow: 0.6875rem;
+  --text-eyebrow--line-height: 1;
+  --text-eyebrow--letter-spacing: 0.22em;
+
+  /* --- Spatial rhythm ----------------------------------------------------- */
+  --spacing-section: clamp(6rem, 11vw, 12rem); /* vertical air between sections */
+  --spacing-gutter: clamp(1.25rem, 4vw, 4.5rem); /* page side gutter */
+
+  /* --- Shape --------------------------------------------------------------
+   * Sharp. A pill CTA reads as a food-delivery app; a 2px block reads as a
+   * pressed-metal grill plate. That is the brand.                            */
+  --radius-sharp: 2px;
+  --radius-card: 4px;
+
+  /* --- Motion -------------------------------------------------------------
+   * One easing vocabulary, used everywhere. GSAP mirrors these in src/lib/gsap.ts. */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
+  --dur-fast: 180ms;
+  --dur-base: 420ms;
+  --dur-slow: 900ms;
+
+  /* --- Depth --------------------------------------------------------------- */
+  --z-nav: 60;
+  --z-menu: 70;
+  --z-transition: 80;
+  --z-loader: 90;
+}
+
+/* Explicit direction variants. Logical properties do most of the RTL work; these
+ * are for the handful of places where a value (not a side) has to flip. */
+@custom-variant rtl (&:where([dir='rtl'], [dir='rtl'] *));
+@custom-variant ltr (&:where([dir='ltr'], [dir='ltr'] *));
+
+/* ------------------------------------------------------------------------- *
+ * Base
+ * ------------------------------------------------------------------------- */
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    /* Lenis drives scrolling; native smooth-scroll would fight it. */
+    scroll-behavior: auto;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-ink);
+    color: var(--color-bone);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /* Nothing may ever escape the viewport horizontally. */
+    overflow-x: clip;
+  }
+
+  /* Lenis is running: it sets html.lenis-smooth. Keep native scroll usable
+   * when it is not (reduced motion, JS off). */
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
+
+  /* Focus: never removed, always obvious. Flame on ink is 10.7:1. */
+  :focus-visible {
+    outline: 2px solid var(--color-flame);
+    outline-offset: 3px;
+    border-radius: var(--radius-sharp);
+  }
+  :focus:not(:focus-visible) {
+    outline: none;
+  }
+
+  ::selection {
+    background-color: var(--color-ember);
+    color: var(--color-ink);
+  }
+
+  img,
+  svg {
+    display: block;
+    max-width: 100%;
+  }
+}
+
+/* ------------------------------------------------------------------------- *
+ * Typographic components
+ * ------------------------------------------------------------------------- */
+
+@layer components {
+  /* The display voice: heavy, uppercase, tight. Latin only — see the Arabic
+   * override directly below, which is not optional. */
+  .display {
+    font-family: var(--font-display);
+    font-weight: 400;
+    text-transform: uppercase;
+    text-wrap: balance;
+  }
+
+  .eyebrow {
+    font-family: var(--font-body);
+    font-size: var(--text-eyebrow);
+    letter-spacing: var(--text-eyebrow--letter-spacing);
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--color-ash-700);
+  }
+  [lang='ar'] .eyebrow {
+    text-transform: none;
+    letter-spacing: 0.08em;
+    font-weight: 700;
+  }
+
+  /* Body copy is capped at a readable measure, never edge to edge. */
+  .measure {
+    max-width: 62ch;
+  }
+  .measure-tight {
+    max-width: 48ch;
+  }
+
+  /* Prices and stats.
+   *
+   * Digits stay Latin in both languages (CLAUDE.md) — which needs no font
+   * override: both Arabic faces carry Latin numerals, and CSS never substitutes
+   * Arabic-Indic digits on its own. Deliberately NOT forcing the Latin body face
+   * here, because that would strip the display face off a 72px stat number.
+   *
+   * `direction: ltr` + `isolate` keeps a value like "38g" from being reordered
+   * by the bidi algorithm when it sits inside an Arabic sentence, and tabular
+   * figures keep a counting animation from wobbling the layout. */
+  .num {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: 'tnum' 1;
+    direction: ltr;
+    unicode-bidi: isolate;
+  }
+
+  /* The ember glow. Used behind the burger and under the CTA. It is a radial
+   * gradient on a transformable element — never an animated box-shadow. */
+  .ember-glow {
+    background: radial-gradient(
+      circle at 50% 50%,
+      color-mix(in oklab, var(--color-ember) 55%, transparent) 0%,
+      color-mix(in oklab, var(--color-ember) 22%, transparent) 32%,
+      color-mix(in oklab, var(--color-flame) 8%, transparent) 55%,
+      transparent 72%
+    );
+    filter: blur(28px);
+    will-change: transform, opacity;
+  }
+
+  /* A hairline that reads as a machined edge rather than a CSS border. */
+  .rule {
+    background: linear-gradient(
+      to right,
+      transparent,
+      var(--color-ash-500) 12%,
+      var(--color-ash-500) 88%,
+      transparent
+    );
+    height: 1px;
+  }
+
+  /* Text masked to the ember→flame heat gradient. One word per page, maximum. */
+  .heat-text {
+    background: linear-gradient(96deg, var(--color-ember) 0%, var(--color-flame) 78%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    /* The gradient is clipped to the glyphs, so the text has no paint of its own.
+     * Forced-colors mode would render it invisible — give it its colour back. */
+  }
+  @media (forced-colors: active) {
+    .heat-text {
+      color: CanvasText;
+      -webkit-text-fill-color: CanvasText;
+    }
+  }
+
+  /* Mask-reveal wrapper: a line of type that slides up from behind its own
+   * baseline. Transform only. */
+  .mask-line {
+    display: block;
+    overflow: hidden;
+    /* Leading is clipped by overflow:hidden; pad it back so ascenders and the
+     * Arabic hamza are not shaved off. */
+    padding-block: 0.08em;
+    margin-block: -0.08em;
+  }
+
+  /* The scroll cue. A coal breathing. */
+  .ember-tick {
+    transform-origin: top center;
+    animation: ember-tick 2.6s var(--ease-in-out-quart) infinite;
+  }
+
+  /* The locations plan: a drafting grid, faded off at the edges so it reads as a
+   * schematic rather than as a table. The mask is what keeps it from having a
+   * hard rectangular border it has not earned. */
+  .plan-grid {
+    background-image:
+      linear-gradient(to right, var(--color-ash-400) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--color-ash-400) 1px, transparent 1px);
+    background-size: 12.5% 16.6667%;
+    -webkit-mask-image: radial-gradient(ellipse at 50% 50%, black 42%, transparent 82%);
+    mask-image: radial-gradient(ellipse at 50% 50%, black 42%, transparent 82%);
+  }
+
+  /* ------------------------------------------------------------------------ *
+   * The footer marquee.
+   *
+   * DELIBERATELY CSS, NOT GSAP — for two independent reasons, and both matter.
+   *
+   * 1. RTL. A marquee is the single most-forgotten instance of "horizontal motion
+   *    must invert its x-direction in RTL" (CLAUDE.md). In LTR the band travels
+   *    left, so words enter from the right — the direction you read INTO. In RTL
+   *    that is backwards: the words must travel right and enter from the left. The
+   *    track is two identical copies, so a 50% translation is exactly one copy and
+   *    the loop is seamless in both. Two keyframes, one per direction, selected by
+   *    [dir] — the flip cannot be forgotten at a call site because there is no call
+   *    site.
+   *
+   * 2. The screenshot harness. scripts/shot.mjs decides a section has stopped
+   *    moving by fingerprinting every element's computed transform until it is
+   *    identical across three samples — and it EXCLUDES elements running a CSS
+   *    animation, because an infinite decorative loop never settles by design. A
+   *    GSAP `repeat: -1` tween is NOT a CSS animation: getAnimations() cannot see
+   *    it, the fingerprint would change on every frame, and the footer could never
+   *    be photographed at all. Written in CSS, the loop is visible to the harness
+   *    as what it is, and the rest of the footer can still be verified around it.
+   *
+   * Reduced motion: the @media block at the bottom of this file stops it dead. The
+   * rest state is translateX(0) — the band is simply a line of type, complete and
+   * legible. Nothing is stranded.
+   * ------------------------------------------------------------------------ */
+  .marquee-track {
+    animation: marquee-ltr 34s linear infinite;
+    will-change: transform;
+  }
+  [dir='rtl'] .marquee-track {
+    animation-name: marquee-rtl;
+  }
+}
+
+@keyframes ember-tick {
+  0%,
+  100% {
+    transform: scaleY(0.3);
+    opacity: 0.45;
+  }
+  50% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
+
+@keyframes marquee-ltr {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes marquee-rtl {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(50%);
+  }
+}
+
+/* ------------------------------------------------------------------------- *
+ * Arabic type metrics
+ *
+ * !! THIS BLOCK IS DELIBERATELY UNLAYERED. Do not wrap it in @layer. !!
+ *
+ * It used to live in `@layer components`, where it did nothing at all.
+ *
+ * `text-display` / `text-h1` / `text-h2` are Tailwind utilities, and they carry a
+ * line-height and a letter-spacing of their own (from the --text-* pairs in
+ * @theme). Utilities sit in `@layer utilities`, which OUTRANKS `@layer
+ * components` no matter how specific the components-layer selector is — cascade
+ * layers are decided before specificity. So every one of these rules lost, in
+ * silence, and Arabic was being rendered with LATIN metrics:
+ *
+ *   line-height 0.84      — far too tight for a script with deep descenders. The
+ *                           ج and م tails were sheared flat by the mask's
+ *                           overflow:hidden. The Arabic hero headline was cropped.
+ *   letter-spacing -0.035em — negative tracking on a cursive script, prising apart
+ *                           the joins between letters it is illegal to unjoin.
+ *
+ * Unlayered rules beat every layered rule, so this is the one place these can
+ * live and actually take effect. A Latin face must never render Arabic, and Latin
+ * METRICS must never render Arabic either — that is the whole difference between
+ * a bilingual site and a translated one.
+ * ------------------------------------------------------------------------- */
+
+[lang='ar'] {
+  --font-display: var(--font-display-ar);
+  --font-body: var(--font-body-ar);
+}
+
+[lang='ar'] .display {
+  font-weight: 900;
+  text-transform: none; /* Arabic has no letter case. */
+  letter-spacing: 0;
+  line-height: 1.15;
+}
+
+/* Leading generous enough that the ink of ج / ح / م clears the line box, because
+ * a masked line clips anything that does not.
+ *
+ * And Arabic display gets its OWN size, not the Latin one.
+ *
+ * Latin display is 13vw. Arabic set at 13vw is not "the same size" — it is
+ * enormously bigger to the eye. Latin spends most of its em on x-height with
+ * ascenders and descenders reaching past it, so a lot of the em box is air;
+ * Arabic fills the box. Matching the two on font-size matches them on a number
+ * nobody can see, and mismatches them on the only thing anyone can: how big the
+ * words look.
+ *
+ * It is also a hard layout constraint. The hero is 100svh with `overflow:hidden`.
+ * At 1440x900 the budget left for the two headline lines, after the padding, the
+ * eyebrow and the burger, is 311px — 155px a line. Latin at 13vw/0.84 needs 157px
+ * and only just fits. Arabic at 13vw/1.15 needs 215px, and the second line was
+ * being sheared off by the section. 9vw against a 1.15 leading needs 149px: it
+ * fits, and it is optically the same weight of statement as the English. */
+[lang='ar'] .text-display {
+  font-size: clamp(2.8rem, 9vw, 8.5rem);
+  line-height: 1.15;
+  letter-spacing: 0;
+}
+
+[lang='ar'] [data-loader-char] {
+  line-height: 1.15;
+  letter-spacing: 0;
+}
+
+[lang='ar'] .text-h1,
+[lang='ar'] .text-h2 {
+  line-height: 1.2;
+  letter-spacing: 0;
+}
+
+[lang='ar'] .text-h3 {
+  line-height: 1.3;
+  letter-spacing: 0;
+}
+
+/* Wide tracking mangles Arabic joins; ease it off. */
+[lang='ar'] .text-eyebrow {
+  letter-spacing: 0.08em;
+}
+
+/* The showcase's ghost word has no Arabic rule here any more, because Arabic has
+ * no ghost word. Sizing it was never the fix. At 18vw «التركيب» bled off the edge;
+ * at 12vw it fitted and was still illegible, because the burger is opaque and sits
+ * across its middle, and a cursive script severed through its joins does not resolve
+ * as a word at any size. Latin survives the same occlusion only because its letters
+ * are already separate marks. The device is script-specific, so it is language-gated
+ * in the dictionary (src/i18n/en.ts) rather than shrunk here. */
+
+/* The mask needs more room to clip *around* rather than *through* the script. */
+[lang='ar'] .mask-line {
+  padding-block: 0.18em;
+  margin-block: -0.18em;
+}
+
+/* ------------------------------------------------------------------------- *
+ * Utilities
+ * ------------------------------------------------------------------------- */
+
+@layer utilities {
+  /* Film grain. A fixed, non-interactive overlay — the single cheapest thing
+   * that stops a flat dark page from looking like a flat dark template. */
+  .grain::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    pointer-events: none;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* Screen-reader-only, but focusable (skip link). */
+  .sr-only-focusable:not(:focus):not(:focus-within) {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}
+
+/* ------------------------------------------------------------------------- *
+ * The motion gate
+ *
+ * `html.motion` is added by a tiny blocking script in <head> (layout.tsx) and
+ * ONLY when JS is running AND the user has not asked for reduced motion.
+ *
+ * Everything that an entrance timeline reveals starts at opacity 0 — but only
+ * behind this class. That inverts the usual failure: if the script never runs,
+ * if JS is disabled, if a chunk 404s, or if the user prefers reduced motion,
+ * the class is absent, nothing is hidden, and the page is simply *there*,
+ * complete and legible. Content is never stranded at opacity 0 waiting for an
+ * animation that will not arrive.
+ *
+ * Same trick for the loader: with no motion gate it is display:none, so it can
+ * never trap the page behind a curtain that has no script to lift it.
+ * ------------------------------------------------------------------------- */
+
+html.motion [data-animate] {
+  opacity: 0;
+}
+
+/* The hero's burger and the coal behind it. These were Tailwind `opacity-0`
+ * utilities on the elements themselves — i.e. hidden UNCONDITIONALLY, outside the
+ * gate — while the only thing that ever set them back to 1 was the entrance
+ * timeline, which Hero.tsx skips outright under reduced motion. So a reduced-motion
+ * reader got the headline, the lede and the CTA, and no burger and no glow at all:
+ * the centrepiece of the page, and the product, stranded at opacity 0 waiting for
+ * an animation that by definition never runs. Photographed in
+ * 04-hero-reduced-*.png; that is what the reduced shots are for.
+ *
+ * Behind the gate, they fade in as before. Without it, they are simply there. */
+html.motion [data-hero-burger],
+html.motion [data-hero-glow] {
+  opacity: 0;
+}
+
+html:not(.motion) [data-loader] {
+  display: none;
+}
+
+/* Mask-reveal rest state: the line starts pushed below its own clipping mask, so
+ * the first painted frame is already the "before" of the timeline rather than a
+ * flash of finished type that then jumps. Pure transform — no opacity, because a
+ * masked line that also fades reads as a fade, and the whole point is the slide.
+ *
+ * !! The 125% here is a PERCENTAGE, and GSAP cannot read a percentage transform
+ * !! back out of a computed style — it parses the matrix into pixels. A tween
+ * !! written as `.to({ yPercent: 0 })` therefore tweens 0 -> 0 and this line
+ * !! NEVER COMES BACK. That bug shipped once and cost the site every headline on
+ * !! every page, silently, with a green build.
+ * !!
+ * !! So: do not unwind this by hand. The one function allowed to undo it is
+ * !! revealMask() in src/lib/gsap.ts, which declares the from-state explicitly
+ * !! (yPercent AND y) so GSAP never has to read this rule at all. If you add a
+ * !! new [data-mask] line, animate it with revealMask(). No exceptions.
+ * !! The 125 is duplicated there as MASK_SHIFT; the two must agree. */
+html.motion [data-mask] {
+  transform: translateY(125%);
+}
+
+/* Ingredient-showcase rest states. The labels and their connectors arrive with
+ * the separation, so they start absent — but only behind the motion gate, so a
+ * reduced-motion or no-JS reader gets the finished, fully labelled diagram. */
+html.motion [data-label],
+html.motion [data-mobile-item] {
+  opacity: 0;
+}
+html.motion [data-mobile-item] {
+  transform: translateY(20px);
+}
+html.motion [data-connector] {
+  transform: scaleX(0);
+}
+
+/* The leader line's full stop, sitting on the layer's silhouette.
+ *
+ * Hidden until JS has MEASURED where that silhouette is. Deliberately not behind
+ * the motion gate: without JS the connector's length is unknown (it is a CSS var
+ * that only measure() can write), so its length is 0 — and a pin parked at the end
+ * of a zero-length line is a dot floating next to a word, pointing at nothing.
+ * Every path that knows the geometry turns it on: the scrubbed timeline tweens it
+ * in, the reduced-motion branch sets it. Every path that does not, leaves it off. */
+[data-pin] {
+  opacity: 0;
+}
+
+/* A connector grows from the edge nearest its own text, outward to the layer it
+ * points at — and its LENGTH is measured, not assumed: `--connector` is written by
+ * IngredientShowcase's measure() from the layer's real on-screen silhouette. It was
+ * once a fixed `w-12 xl:w-20`, which ended ~150px short of the burger at 1440 and
+ * a different wrong distance at every other width.
+ *
+ * Which physical edge it grows FROM depends on the side the label sits on AND on
+ * the reading direction — all four cases, spelled out. */
+[data-connector][data-from='start'] {
+  transform-origin: left center;
+}
+[data-connector][data-from='end'] {
+  transform-origin: right center;
+}
+[dir='rtl'] [data-connector][data-from='start'] {
+  transform-origin: right center;
+}
+[dir='rtl'] [data-connector][data-from='end'] {
+  transform-origin: left center;
+}
+
+/* ---- Supply story ------------------------------------------------------- *
+ * The chain of custody is drawn, not stated. Behind the four steps is an ash
+ * TRACK and, over it, an ember FILL that scrubs open as you scroll. The fill
+ * carries an ember→flame gradient, and because a scale stretches the gradient
+ * along with the element, the brightest end is ALWAYS at the growing edge: the
+ * ember rides at the head of the line, from the herd to your hands. Free, exact,
+ * and with nothing to measure.
+ *
+ * There are two of them because the chain reads ACROSS on desktop (farm → hand,
+ * in the reading direction) and DOWN on a phone. The other one is display:none,
+ * so tweening both costs nothing and buys us out of a gsap.matchMedia — whose
+ * condition sets are the thing that silently killed the whole mobile branch of
+ * the ingredient showcase once already.
+ *
+ * The horizontal one grows from the READING-START edge and therefore flips its
+ * transform-origin in RTL, exactly like the loader bar below. Its gradient flips
+ * with it (rtl:bg-gradient-to-l on the element), so the flame stays at the head
+ * of the line in Arabic instead of trailing behind it.
+ *
+ * A fill that grows from its middle is not a line being drawn, it is a line being
+ * inflated — hence the edge origins, never `center`. */
+[data-spine-h] {
+  transform-origin: left center;
+}
+[dir='rtl'] [data-spine-h] {
+  transform-origin: right center;
+}
+[data-spine-v] {
+  transform-origin: top center;
+}
+
+html.motion [data-spine-h] {
+  transform: scaleX(0);
+}
+html.motion [data-spine-v] {
+  transform: scaleY(0);
+}
+html.motion [data-step-dot] {
+  opacity: 0;
+  transform: scale(0.4);
+}
+
+/* ---- Locations ---------------------------------------------------------- *
+ * The pins arrive with the plan. The GSAP entrance owns the OUTER element's
+ * transform; the hover reaction owns an INNER span's transform. Two elements, two
+ * owners — because an inline transform written by GSAP silently beats a Tailwind
+ * hover:scale class on the same node, and the hover would then simply not work. */
+html.motion [data-map-pin] {
+  opacity: 0;
+  transform: scale(0.4);
+}
+html.motion [data-branch] {
+  opacity: 0;
+}
+
+/* ---- The blend wheel (/spices) ------------------------------------------ *
+ * A spoke is DRAWN out of the hub, so it grows from the hub end — which is the
+ * element's LEFT edge, physically, in both languages. It gets no `[dir]` flip and
+ * that is not an oversight: the spoke's parent carries a physical `rotate()`, so
+ * "the end nearest the hub" is the left edge at every angle and in every reading
+ * direction. Flipping this would make all nine spokes grow inward, from the ring
+ * back into the coal.
+ *
+ * The share bars on the phone are the opposite case — they are chrome, they run
+ * along the reading axis, and they must fill from the reading-start edge. So they
+ * DO flip, exactly like the supply spine and the loader bar. Two horizontal
+ * scaleX animations on one page, one flipping and one not, each for a reason. */
+[data-spoke] {
+  transform-origin: left center;
+}
+
+[data-share-bar] {
+  transform-origin: left center;
+}
+[dir='rtl'] [data-share-bar] {
+  transform-origin: right center;
+}
+
+html.motion [data-spoke],
+html.motion [data-share-bar] {
+  transform: scaleX(0);
+}
+html.motion [data-spice] {
+  opacity: 0;
+  transform: scale(0.5);
+}
+html.motion [data-hub] {
+  opacity: 0;
+  transform: scale(0.86);
+}
+/* Unlayered, so it beats the `opacity-55` utility on the same element — and the
+ * tween in Blend.tsx must therefore END on 0.55, not on 1, or the coal is a
+ * different temperature for a reduced-motion reader than for everyone else. */
+html.motion [data-hub-glow] {
+  opacity: 0;
+}
+
+/* ---- Closing CTA and 404: the coal, and the last hairline ---------------- *
+ * These rules are UNLAYERED, so they beat the `opacity-50` / `opacity-40` utility
+ * sitting on the same element (utilities are a cascade layer; unlayered is not,
+ * and unlayered wins). That is exactly the override we want — and it is also why
+ * the tween in each component must end on that SAME number rather than on 1:
+ * the utility is the resting brightness for a no-JS or reduced-motion reader, and
+ * the animation has to arrive at the state that reader already sees, or the coal
+ * is twice as hot for everyone else. */
+html.motion [data-cta-glow],
+html.motion [data-404-glow] {
+  opacity: 0;
+}
+html.motion [data-404-rule] {
+  transform: scaleX(0);
+}
+
+/* Loader rest states, same idea — and the same trap. [data-loader-char] is
+ * unwound by revealMask() too; see the warning above. */
+/* Loyalty coals (account meter). The lit coals' fill starts caught mid-ignite so
+ * the entrance is a slide from dark, not a flash of five lit coals that then jump.
+ * Behind the gate only: a no-JS or reduced-motion reader gets them fully lit and
+ * legible, because LoyaltyMeter's ignite effect never runs for them. The ignite is
+ * a per-coal scale (origin centre) and ENDS at scale(1)/opacity(1) -- the state
+ * this rule's absence already shows -- so the two paths agree. Only the account
+ * variant carries [data-coal-ignite]; the drawer coals are never hidden. */
+html.motion [data-coal-ignite] {
+  opacity: 0;
+  transform: scale(0.2);
+}
+
+html.motion [data-loader-char] {
+  transform: translateY(125%);
+}
+html.motion [data-loader-bar] {
+  transform: scaleX(0);
+}
+html.motion [data-loader-line] {
+  opacity: 0;
+}
+
+/* The progress line fills from the reading-start edge in both directions. This
+ * is the transform-origin half of the "horizontal motion inverts in RTL" rule —
+ * without it, the Arabic loader fills backwards. */
+[data-loader-bar] {
+  transform-origin: left center;
+}
+[dir='rtl'] [data-loader-bar] {
+  transform-origin: right center;
+}
+
+/* ------------------------------------------------------------------------- *
+ * Reduced motion — the contract
+ *
+ * Under reduced motion the site is fully legible and complete at rest: every
+ * element that JS would have animated in is already in its final state.
+ * GSAP checks the same media query (src/lib/motion.ts) and skips pinning, scrub
+ * and the loader timeline entirely; this block is the CSS half of that promise.
+ * ------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Belt and braces: even if something did add the motion gate, nothing that
+   * carries content may be left hidden or displaced. */
+  [data-animate] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  /* An infinite pulse is exactly what a vestibular-sensitive user asked us not to
+   * do. Kill the loop and leave the tick at full height. */
+  .ember-tick {
+    animation: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+
+  /* An endlessly sliding wall of type is the same ask. Stop it. Unlike the tick,
+   * the marquee's rest state IS its correct state — translateX(0) shows the first
+   * of the two identical copies — so it just becomes a line of type that happens
+   * to run off the edge of its own band. Nothing is lost but the travelling. */
+  .marquee-track {
+    animation: none !important;
+    transform: none !important;
+  }
+}

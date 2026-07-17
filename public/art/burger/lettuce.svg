@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 800" width="1000" height="800" role="presentation">
+  <defs>
+    <linearGradient id="lt-leaf" x1="0.2" y1="0" x2="0.8" y2="1">
+      <stop offset="0" stop-color="#A8D468"/>
+      <stop offset="0.38" stop-color="#7CB245"/>
+      <stop offset="0.74" stop-color="#4E8230"/>
+      <stop offset="1" stop-color="#33581F"/>
+    </linearGradient>
+    <linearGradient id="lt-back" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#5E8C3A"/>
+      <stop offset="1" stop-color="#2C4C1C"/>
+    </linearGradient>
+    <linearGradient id="lt-ember" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#FF4D1C" stop-opacity="0.55"/>
+      <stop offset="0.5" stop-color="#FFB020" stop-opacity="0.3"/>
+      <stop offset="1" stop-color="#FF4D1C" stop-opacity="0.5"/>
+    </linearGradient>
+    <filter id="lt-soft" x="-25%" y="-40%" width="150%" height="180%">
+      <feGaussianBlur stdDeviation="11"/>
+    </filter>
+    <filter id="lt-glow" x="-25%" y="-40%" width="150%" height="180%">
+      <feGaussianBlur stdDeviation="6"/>
+    </filter>
+  </defs>
+
+  <ellipse cx="500" cy="352" rx="345" ry="15" fill="#000000" opacity="0.45" filter="url(#lt-soft)"/>
+
+  <!-- the leaf that shows behind, darker: two ruffles reading as depth -->
+  <path d="M132 322
+           C168 296 214 316 246 300 C286 280 320 312 362 296 C404 280 438 314 482 300
+           C526 286 556 316 600 300 C646 284 678 314 722 300 C766 286 800 316 842 300
+           C876 288 892 306 878 326
+           C846 350 760 344 700 350 C620 358 540 356 500 356 C460 356 380 358 300 350
+           C240 344 154 350 122 326 Z"
+        fill="url(#lt-back)" opacity="0.95"/>
+
+  <!-- the front ruffle. hand-plotted bezier crests of deliberately unequal width -->
+  <path d="M118 330
+           C150 292 196 330 232 306 C270 280 300 326 344 304 C388 282 414 330 460 308
+           C506 286 530 332 578 310 C624 289 650 334 696 310 C740 288 774 330 812 306
+           C852 282 892 300 884 334
+           C876 362 828 356 780 362 C712 370 640 366 578 368 C520 370 470 370 414 368
+           C348 366 276 370 210 362 C160 356 112 360 108 336 Z"
+        fill="url(#lt-leaf)"/>
+
+  <!-- veins: pale, fanning from the spine outward -->
+  <g stroke="#D8ECAA" stroke-width="2.5" fill="none" opacity="0.35" stroke-linecap="round">
+    <path d="M200 352 C230 336 246 320 258 302"/>
+    <path d="M300 358 C324 340 340 322 352 302"/>
+    <path d="M404 362 C424 342 438 324 448 306"/>
+    <path d="M508 364 C528 344 544 326 556 308"/>
+    <path d="M612 362 C634 342 650 324 662 306"/>
+    <path d="M716 358 C738 338 754 320 766 302"/>
+    <path d="M812 350 C834 334 848 320 858 306"/>
+  </g>
+
+  <!-- crisp highlight along the top crests -->
+  <path d="M136 320 C170 292 200 326 236 304 C272 282 304 324 348 302"
+        fill="none" stroke="#E6F5C4" stroke-width="3" opacity="0.4" stroke-linecap="round"/>
+  <path d="M584 306 C628 286 654 330 700 306 C742 284 776 326 814 304"
+        fill="none" stroke="#E6F5C4" stroke-width="3" opacity="0.34" stroke-linecap="round"/>
+
+  <!-- ember bounce along the underside -->
+  <path d="M140 356 C260 372 380 372 500 372 C620 372 740 370 860 354"
+        fill="none" stroke="url(#lt-ember)" stroke-width="12" filter="url(#lt-glow)" opacity="0.7"/>
+</svg>

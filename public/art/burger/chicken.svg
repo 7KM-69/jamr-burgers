@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 800" width="1000" height="800" role="presentation">
+  <defs>
+    <linearGradient id="ck-face" x1="0.3" y1="0" x2="0.7" y2="1">
+      <stop offset="0" stop-color="#E8A94E"/>
+      <stop offset="0.35" stop-color="#D08A2C"/>
+      <stop offset="0.75" stop-color="#A9631A"/>
+      <stop offset="1" stop-color="#7A4310"/>
+    </linearGradient>
+    <linearGradient id="ck-ember" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#FF4D1C" stop-opacity="0.85"/>
+      <stop offset="0.5" stop-color="#FFB020" stop-opacity="0.5"/>
+      <stop offset="1" stop-color="#FF4D1C" stop-opacity="0.8"/>
+    </linearGradient>
+    <!-- Contact-shadow blur box in user space — see patty.svg for why. -->
+    <filter id="ck-soft" filterUnits="userSpaceOnUse" x="150" y="496" width="700" height="150">
+      <feGaussianBlur stdDeviation="8"/>
+    </filter>
+    <filter id="ck-glow" x="-30%" y="-50%" width="160%" height="220%">
+      <feGaussianBlur stdDeviation="9"/>
+    </filter>
+    <clipPath id="ck-clip">
+      <path d="M150 466 C154 434 206 420 286 414 C366 408 430 414 500 414 C570 414 640 408 722 414
+               C800 420 852 434 852 466 C852 496 838 514 812 522 C744 546 630 552 500 552
+               C370 552 254 544 186 520 C160 510 148 494 150 466 Z"/>
+    </clipPath>
+  </defs>
+
+  <!-- Contact shadow, not a pillow. Same seam as patty.svg — same seat, same rule. -->
+  <ellipse cx="500" cy="552" rx="292" ry="5" fill="#000000" opacity="0.4" filter="url(#ck-soft)"/>
+
+  <!-- craggy fried edge: the silhouette is deliberately lumpy, not an ellipse -->
+  <path d="M150 466 C154 434 206 420 286 414 C366 408 430 414 500 414 C570 414 640 408 722 414
+           C800 420 852 434 852 466 C852 496 838 514 812 522 C744 546 630 552 500 552
+           C370 552 254 544 186 520 C160 510 148 494 150 466 Z"
+        fill="url(#ck-face)"/>
+
+  <g clip-path="url(#ck-clip)">
+    <!-- blistered crust -->
+    <g fill="#F3C878" opacity="0.5">
+      <ellipse cx="280" cy="452" rx="42" ry="14" transform="rotate(-8 280 452)"/>
+      <ellipse cx="452" cy="440" rx="54" ry="13" transform="rotate(3 452 440)"/>
+      <ellipse cx="640" cy="452" rx="48" ry="14" transform="rotate(-4 640 452)"/>
+      <ellipse cx="768" cy="478" rx="38" ry="11" transform="rotate(7 768 478)"/>
+      <ellipse cx="360" cy="500" rx="50" ry="11" transform="rotate(2 360 500)"/>
+      <ellipse cx="600" cy="508" rx="56" ry="11" transform="rotate(-3 600 508)"/>
+    </g>
+    <g fill="#8A4E12" opacity="0.45">
+      <ellipse cx="330" cy="470" rx="26" ry="8"/>
+      <ellipse cx="520" cy="482" rx="32" ry="8"/>
+      <ellipse cx="700" cy="500" rx="24" ry="7"/>
+      <ellipse cx="430" cy="516" rx="30" ry="7"/>
+    </g>
+    <!-- fried craquelure -->
+    <g stroke="#7A4310" stroke-width="2" fill="none" opacity="0.35" stroke-linecap="round">
+      <path d="M240 440 C300 460 340 448 400 468"/>
+      <path d="M480 428 C540 452 590 438 660 462"/>
+      <path d="M300 508 C380 528 460 512 540 530"/>
+      <path d="M600 470 C660 490 720 478 790 496"/>
+    </g>
+    <ellipse cx="500" cy="556" rx="300" ry="40" fill="#FF7A2E" opacity="0.3"/>
+  </g>
+
+  <path d="M164 500 C264 530 380 546 500 546 C620 546 740 530 836 498"
+        fill="none" stroke="url(#ck-ember)" stroke-width="7" filter="url(#ck-glow)" opacity="0.8"/>
+</svg>

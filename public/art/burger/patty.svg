@@ -1,0 +1,131 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 800" width="1000" height="800" role="presentation">
+  <defs>
+    <linearGradient id="pt-face" x1="0.3" y1="0" x2="0.7" y2="1">
+      <stop offset="0" stop-color="#8A5330"/>
+      <stop offset="0.34" stop-color="#6B3B20"/>
+      <stop offset="0.72" stop-color="#4A2617"/>
+      <stop offset="1" stop-color="#33170E"/>
+    </linearGradient>
+    <linearGradient id="pt-side" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#5C3018"/>
+      <stop offset="0.55" stop-color="#3E1E11"/>
+      <stop offset="1" stop-color="#24100A"/>
+    </linearGradient>
+    <radialGradient id="pt-heat" cx="0.5" cy="1" r="0.7">
+      <stop offset="0" stop-color="#FF4D1C" stop-opacity="0.95"/>
+      <stop offset="0.45" stop-color="#FF7A2E" stop-opacity="0.45"/>
+      <stop offset="1" stop-color="#FFB020" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="pt-crust" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#FF4D1C" stop-opacity="0.9"/>
+      <stop offset="0.35" stop-color="#FFB020" stop-opacity="0.7"/>
+      <stop offset="0.65" stop-color="#FF7A2E" stop-opacity="0.75"/>
+      <stop offset="1" stop-color="#FF4D1C" stop-opacity="0.9"/>
+    </linearGradient>
+    <!-- The CONTACT shadow's blur box, in user space.
+         A percentage box would be measured against the ellipse's own bounding box,
+         and this ellipse is deliberately thin (ry=5) — 200% of 10px is 20px, which
+         would clip a stdDeviation-8 blur into a hard-edged rectangle. -->
+    <filter id="pt-soft" filterUnits="userSpaceOnUse" x="150" y="496" width="700" height="150">
+      <feGaussianBlur stdDeviation="8"/>
+    </filter>
+    <filter id="pt-glow" x="-30%" y="-50%" width="160%" height="220%">
+      <feGaussianBlur stdDeviation="9"/>
+    </filter>
+    <filter id="pt-emberglow" x="-40%" y="-60%" width="180%" height="240%">
+      <feGaussianBlur stdDeviation="24"/>
+    </filter>
+    <clipPath id="pt-clip">
+      <path d="M142 462 C142 438 190 424 268 418 C346 412 420 416 500 416 C580 416 656 412 734 418
+               C812 424 858 438 858 462 C858 490 848 508 828 516 C760 540 640 548 500 548
+               C360 548 240 540 172 516 C152 508 142 490 142 462 Z"/>
+    </clipPath>
+  </defs>
+
+  <!-- the coal underneath. this is the whole brand in one shape. -->
+  <ellipse cx="500" cy="536" rx="300" ry="42" fill="url(#pt-heat)" opacity="0.55" filter="url(#pt-emberglow)"/>
+
+  <!-- CONTACT shadow — a seam, not a pillow.
+       This was rx=330 ry=18 at 0.55 black through a stdDeviation-12 blur: a soft
+       black slab roughly 80px tall, centred exactly on y=552. The heel's toasted
+       cut face (bun-bottom.svg, y 546-574) is the brightest surface on the whole
+       burger and it lives inside that slab — and the protein paints ABOVE the heel,
+       so the slab blacked the cut face out completely. The result read as a hole
+       between the patty and the bun, which is precisely the opposite of what a
+       contact shadow is for. It is the one thing on the burger that has to say
+       "these two are touching".
+       Narrower than the patty, thin, and fading out by y=577, so the cut face keeps
+       its highlight and its ember bounce below the seam. -->
+  <ellipse cx="500" cy="552" rx="292" ry="5" fill="#000000" opacity="0.42" filter="url(#pt-soft)"/>
+
+  <!-- the seared side wall -->
+  <path d="M142 462 C142 500 200 528 320 540 C400 548 600 548 680 540 C800 528 858 500 858 462
+           C858 496 858 500 858 500 C858 528 740 552 500 552 C260 552 142 528 142 500 Z"
+        fill="url(#pt-side)"/>
+
+  <!-- the top face: irregular, hand-pressed, never a clean ellipse -->
+  <path d="M142 462 C142 438 190 424 268 418 C346 412 420 416 500 416 C580 416 656 412 734 418
+           C812 424 858 438 858 462 C858 490 848 508 828 516 C760 540 640 548 500 548
+           C360 548 240 540 172 516 C152 508 142 490 142 462 Z"
+        fill="url(#pt-face)"/>
+
+  <g clip-path="url(#pt-clip)">
+    <!-- maillard crust: bright, uneven, catching the light on the raised ridges -->
+    <path d="M186 448 C260 428 340 438 420 432 C500 426 560 440 640 434 C720 428 790 440 828 452"
+          fill="none" stroke="#B07240" stroke-width="9" opacity="0.4" stroke-linecap="round"/>
+    <path d="M210 490 C300 474 380 486 470 480 C560 474 650 486 760 478"
+          fill="none" stroke="#93552C" stroke-width="7" opacity="0.32" stroke-linecap="round"/>
+    <!-- char: pits and blackened patches from the bars -->
+    <g fill="#1C0C07" opacity="0.55">
+      <ellipse cx="262" cy="452" rx="46" ry="14" transform="rotate(-6 262 452)"/>
+      <ellipse cx="418" cy="470" rx="58" ry="12" transform="rotate(4 418 470)"/>
+      <ellipse cx="606" cy="448" rx="52" ry="13" transform="rotate(-3 606 448)"/>
+      <ellipse cx="742" cy="474" rx="44" ry="11" transform="rotate(6 742 474)"/>
+      <ellipse cx="330" cy="512" rx="60" ry="10" transform="rotate(2 330 512)"/>
+      <ellipse cx="668" cy="514" rx="56" ry="10" transform="rotate(-2 668 514)"/>
+    </g>
+    <g fill="#0D0503" opacity="0.5">
+      <ellipse cx="300" cy="440" rx="16" ry="6"/>
+      <ellipse cx="512" cy="432" rx="20" ry="6"/>
+      <ellipse cx="700" cy="440" rx="14" ry="5"/>
+      <ellipse cx="380" cy="494" rx="18" ry="5"/>
+      <ellipse cx="580" cy="500" rx="22" ry="6"/>
+    </g>
+    <!-- rendered fat, catching the ember light -->
+    <g fill="#FFB020" opacity="0.22">
+      <ellipse cx="350" cy="458" rx="22" ry="5"/>
+      <ellipse cx="540" cy="466" rx="26" ry="5"/>
+      <ellipse cx="662" cy="490" rx="20" ry="4"/>
+    </g>
+    <!-- The coal's light spilling up over the near edge.
+
+         This was cy=556 ry=44 — spanning y 512-600 — and it was very nearly
+         invisible. `pt-heat` is a radialGradient with cy="1" in objectBoundingBox
+         units, so its HOT POINT is the ellipse's own bottom edge: y=600. The clip
+         path this group is inside (`pt-clip`) ends at y=548. So the bright end of
+         the bounce was clipped away entirely and only the faded outer skirt of the
+         gradient survived, at almost zero alpha.
+
+         The result: the patty's near edge kept the raw `pt-face` gradient, whose
+         bottom stop is #33170E — near-black — and the lower third of the beef patty
+         went dead against the ink. Measured on the centre column it sat at L=44-60,
+         the darkest of the four proteins (lamb 75-85, veg 95, chicken 116), because
+         the other three light their rim with a FLAT fill that the clip cannot
+         defeat. Sandwiched between the bright cheese above and the heel's toasted
+         cut face below (L=141), that black band read as daylight between the patty
+         and the bun — the burger looked like it was floating. It was not: the stack
+         is closed, alpha 255 straight through the seam. It was unlit, not detached.
+
+         So: seat the gradient's hot point ON the clip's bottom edge rather than 52px
+         past it. cy + ry = 548 = the clip's lowest point at the centre line. The
+         bounce now lands exactly on the band that was black, and dies out by
+         mid-face, which is what light from a coal directly underneath actually does. -->
+    <ellipse cx="500" cy="504" rx="300" ry="44" fill="url(#pt-heat)" opacity="0.5"/>
+  </g>
+
+  <!-- glowing crust line where the meat meets the coal -->
+  <path d="M160 498 C260 528 380 542 500 542 C620 542 750 528 840 496"
+        fill="none" stroke="url(#pt-crust)" stroke-width="7" filter="url(#pt-glow)" opacity="0.85"/>
+  <path d="M176 486 C280 514 380 526 500 526 C620 526 726 514 824 484"
+        fill="none" stroke="#FFD08A" stroke-width="2" opacity="0.35"/>
+</svg>

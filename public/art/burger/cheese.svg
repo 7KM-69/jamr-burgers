@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 800" width="1000" height="800" role="presentation">
+  <defs>
+    <linearGradient id="ch-slab" x1="0.25" y1="0" x2="0.7" y2="1">
+      <stop offset="0" stop-color="#FFD776"/>
+      <stop offset="0.36" stop-color="#FFBF43"/>
+      <stop offset="0.78" stop-color="#F09A1E"/>
+      <stop offset="1" stop-color="#C97511"/>
+    </linearGradient>
+    <linearGradient id="ch-drip" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFC94F"/>
+      <stop offset="0.6" stop-color="#F0A020"/>
+      <stop offset="1" stop-color="#D07E10"/>
+    </linearGradient>
+    <linearGradient id="ch-ember" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#FF4D1C" stop-opacity="0.75"/>
+      <stop offset="0.5" stop-color="#FFB020" stop-opacity="0.45"/>
+      <stop offset="1" stop-color="#FF4D1C" stop-opacity="0.7"/>
+    </linearGradient>
+    <filter id="ch-soft" x="-25%" y="-40%" width="150%" height="200%">
+      <feGaussianBlur stdDeviation="10"/>
+    </filter>
+    <filter id="ch-glow" x="-25%" y="-40%" width="150%" height="200%">
+      <feGaussianBlur stdDeviation="6"/>
+    </filter>
+    <clipPath id="ch-clip">
+      <path d="M156 402 C156 388 214 380 300 378 C380 376 430 384 500 384 C570 384 630 376 706 378 C790 380 846 388 846 402
+               C846 420 830 430 806 434 C800 462 792 476 776 476 C760 476 754 458 750 436
+               C700 442 640 444 594 442 C588 470 578 486 560 486 C542 486 534 466 530 440
+               C470 440 400 438 340 432 C334 456 326 468 312 468 C298 468 292 452 288 430
+               C240 426 190 420 170 414 C158 410 156 406 156 402 Z"/>
+    </clipPath>
+  </defs>
+
+  <ellipse cx="500" cy="446" rx="320" ry="13" fill="#000000" opacity="0.4" filter="url(#ch-soft)"/>
+
+  <!-- the slab plus its drips, drawn as one silhouette so the melt reads as one
+       continuous thing rather than a rectangle with icicles glued on -->
+  <path d="M156 402 C156 388 214 380 300 378 C380 376 430 384 500 384 C570 384 630 376 706 378 C790 380 846 388 846 402
+           C846 420 830 430 806 434 C800 462 792 476 776 476 C760 476 754 458 750 436
+           C700 442 640 444 594 442 C588 470 578 486 560 486 C542 486 534 466 530 440
+           C470 440 400 438 340 432 C334 456 326 468 312 468 C298 468 292 452 288 430
+           C240 426 190 420 170 414 C158 410 156 406 156 402 Z"
+        fill="url(#ch-slab)"/>
+
+  <g clip-path="url(#ch-clip)">
+    <!-- the drips are a touch darker than the slab: they are thicker melt -->
+    <path d="M750 430 C752 458 758 478 776 478 C794 478 798 458 800 428 Z" fill="url(#ch-drip)" opacity="0.55"/>
+    <path d="M530 434 C532 466 540 488 560 488 C580 488 586 464 588 434 Z" fill="url(#ch-drip)" opacity="0.55"/>
+    <path d="M288 424 C290 452 296 470 312 470 C328 470 332 452 334 422 Z" fill="url(#ch-drip)" opacity="0.55"/>
+    <!-- specular ridge along the top face -->
+    <path d="M186 396 C280 384 380 390 500 390 C620 390 720 384 814 396"
+          fill="none" stroke="#FFF0BE" stroke-width="6" opacity="0.5" stroke-linecap="round"/>
+    <ellipse cx="380" cy="392" rx="150" ry="8" fill="#FFF3C8" opacity="0.3"/>
+    <!-- warm shade where the patty's heat has thinned it -->
+    <ellipse cx="640" cy="420" rx="180" ry="16" fill="#C97511" opacity="0.18"/>
+  </g>
+
+  <!-- ember bounce underneath the melt -->
+  <path d="M190 424 C300 442 420 448 520 444 C620 440 740 440 830 418"
+        fill="none" stroke="url(#ch-ember)" stroke-width="10" filter="url(#ch-glow)" opacity="0.7"/>
+</svg>

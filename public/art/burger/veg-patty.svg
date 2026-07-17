@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 800" width="1000" height="800" role="presentation">
+  <defs>
+    <linearGradient id="vg-face" x1="0.3" y1="0" x2="0.7" y2="1">
+      <stop offset="0" stop-color="#7E9B4A"/>
+      <stop offset="0.36" stop-color="#5F7C33"/>
+      <stop offset="0.74" stop-color="#42571F"/>
+      <stop offset="1" stop-color="#2B3A13"/>
+    </linearGradient>
+    <linearGradient id="vg-side" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#4E6828"/>
+      <stop offset="1" stop-color="#22300F"/>
+    </linearGradient>
+    <linearGradient id="vg-ember" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#FF4D1C" stop-opacity="0.8"/>
+      <stop offset="0.5" stop-color="#FFB020" stop-opacity="0.45"/>
+      <stop offset="1" stop-color="#FF4D1C" stop-opacity="0.75"/>
+    </linearGradient>
+    <!-- Contact-shadow blur box in user space — see patty.svg for why. -->
+    <filter id="vg-soft" filterUnits="userSpaceOnUse" x="150" y="496" width="700" height="150">
+      <feGaussianBlur stdDeviation="8"/>
+    </filter>
+    <filter id="vg-glow" x="-30%" y="-50%" width="160%" height="220%">
+      <feGaussianBlur stdDeviation="9"/>
+    </filter>
+    <clipPath id="vg-clip">
+      <path d="M142 462 C142 438 190 424 268 418 C346 412 420 416 500 416 C580 416 656 412 734 418
+               C812 424 858 438 858 462 C858 490 848 508 828 516 C760 540 640 548 500 548
+               C360 548 240 540 172 516 C152 508 142 490 142 462 Z"/>
+    </clipPath>
+  </defs>
+
+  <!-- Contact shadow, not a pillow. Same seam as patty.svg — same seat, same rule. -->
+  <ellipse cx="500" cy="552" rx="292" ry="5" fill="#000000" opacity="0.4" filter="url(#vg-soft)"/>
+
+  <path d="M142 462 C142 500 200 528 320 540 C400 548 600 548 680 540 C800 528 858 500 858 462
+           C858 528 740 552 500 552 C260 552 142 528 142 500 Z"
+        fill="url(#vg-side)"/>
+
+  <path d="M142 462 C142 438 190 424 268 418 C346 412 420 416 500 416 C580 416 656 412 734 418
+           C812 424 858 438 858 462 C858 490 848 508 828 516 C760 540 640 548 500 548
+           C360 548 240 540 172 516 C152 508 142 490 142 462 Z"
+        fill="url(#vg-face)"/>
+
+  <g clip-path="url(#vg-clip)">
+    <!-- a pressed patty of visible whole things, not a smooth puck -->
+    <g opacity="0.75">
+      <ellipse cx="270" cy="448" rx="16" ry="9" fill="#C7B24E" transform="rotate(-14 270 448)"/>
+      <ellipse cx="360" cy="472" rx="12" ry="7" fill="#9E4A2C" transform="rotate(22 360 472)"/>
+      <ellipse cx="452" cy="444" rx="15" ry="8" fill="#D6C05A" transform="rotate(8 452 444)"/>
+      <ellipse cx="548" cy="470" rx="13" ry="7" fill="#8F4327" transform="rotate(-18 548 470)"/>
+      <ellipse cx="640" cy="446" rx="16" ry="9" fill="#C7B24E" transform="rotate(12 640 446)"/>
+      <ellipse cx="726" cy="474" rx="12" ry="7" fill="#A9532F" transform="rotate(-9 726 474)"/>
+      <ellipse cx="320" cy="508" rx="14" ry="8" fill="#D6C05A" transform="rotate(6 320 508)"/>
+      <ellipse cx="500" cy="512" rx="15" ry="8" fill="#B8A244" transform="rotate(-6 500 512)"/>
+      <ellipse cx="680" cy="510" rx="13" ry="7" fill="#9E4A2C" transform="rotate(16 680 510)"/>
+    </g>
+    <!-- herb flecks -->
+    <g fill="#B7D97A" opacity="0.5">
+      <ellipse cx="300" cy="430" rx="6" ry="3"/>
+      <ellipse cx="420" cy="490" rx="5" ry="3"/>
+      <ellipse cx="580" cy="432" rx="6" ry="3"/>
+      <ellipse cx="700" cy="490" rx="5" ry="3"/>
+      <ellipse cx="380" cy="524" rx="5" ry="2.5"/>
+      <ellipse cx="620" cy="528" rx="5" ry="2.5"/>
+    </g>
+    <!-- griddle char -->
+    <g fill="#1E2A0D" opacity="0.4">
+      <ellipse cx="240" cy="486" rx="44" ry="11" transform="rotate(-5 240 486)"/>
+      <ellipse cx="470" cy="500" rx="56" ry="10" transform="rotate(3 470 500)"/>
+      <ellipse cx="760" cy="490" rx="40" ry="10" transform="rotate(5 760 490)"/>
+    </g>
+    <ellipse cx="500" cy="556" rx="300" ry="42" fill="#FF7A2E" opacity="0.28"/>
+  </g>
+
+  <path d="M160 498 C260 528 380 542 500 542 C620 542 750 528 840 496"
+        fill="none" stroke="url(#vg-ember)" stroke-width="7" filter="url(#vg-glow)" opacity="0.8"/>
+</svg>

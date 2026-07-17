@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 800" width="1000" height="800" role="presentation">
+  <defs>
+    <radialGradient id="tm-flesh" cx="0.42" cy="0.34" r="0.72">
+      <stop offset="0" stop-color="#F0705F"/>
+      <stop offset="0.42" stop-color="#DC4634"/>
+      <stop offset="0.82" stop-color="#B92C1F"/>
+      <stop offset="1" stop-color="#8E1C12"/>
+    </radialGradient>
+    <linearGradient id="tm-edge" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#E8523E"/>
+      <stop offset="1" stop-color="#7E170F"/>
+    </linearGradient>
+    <linearGradient id="tm-ember" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#FF4D1C" stop-opacity="0.8"/>
+      <stop offset="0.5" stop-color="#FFB020" stop-opacity="0.4"/>
+      <stop offset="1" stop-color="#FF4D1C" stop-opacity="0.7"/>
+    </linearGradient>
+    <filter id="tm-soft" x="-25%" y="-60%" width="150%" height="220%">
+      <feGaussianBlur stdDeviation="10"/>
+    </filter>
+    <filter id="tm-glow" x="-25%" y="-60%" width="150%" height="220%">
+      <feGaussianBlur stdDeviation="6"/>
+    </filter>
+    <clipPath id="tm-clipL">
+      <ellipse cx="352" cy="366" rx="196" ry="30"/>
+    </clipPath>
+    <clipPath id="tm-clipR">
+      <ellipse cx="656" cy="362" rx="188" ry="29"/>
+    </clipPath>
+  </defs>
+
+  <ellipse cx="500" cy="392" rx="330" ry="14" fill="#000000" opacity="0.45" filter="url(#tm-soft)"/>
+
+  <!-- two overlapping slices. cut thick or not at all. -->
+  <g>
+    <!-- rear slice -->
+    <ellipse cx="656" cy="368" rx="188" ry="29" fill="url(#tm-edge)"/>
+    <ellipse cx="656" cy="362" rx="188" ry="29" fill="url(#tm-flesh)"/>
+    <g clip-path="url(#tm-clipR)">
+      <!-- seed cavities: pale gel pockets radiating from the core -->
+      <g fill="#F6B7A4" opacity="0.85">
+        <ellipse cx="656" cy="362" rx="34" ry="9"/>
+        <ellipse cx="560" cy="356" rx="30" ry="8" transform="rotate(-8 560 356)"/>
+        <ellipse cx="752" cy="356" rx="30" ry="8" transform="rotate(8 752 356)"/>
+        <ellipse cx="596" cy="374" rx="26" ry="7" transform="rotate(6 596 374)"/>
+        <ellipse cx="716" cy="374" rx="26" ry="7" transform="rotate(-6 716 374)"/>
+      </g>
+      <g fill="#FFF0CE" opacity="0.9">
+        <ellipse cx="640" cy="360" rx="5" ry="3"/>
+        <ellipse cx="672" cy="364" rx="5" ry="3"/>
+        <ellipse cx="566" cy="355" rx="4.5" ry="2.8"/>
+        <ellipse cx="748" cy="357" rx="4.5" ry="2.8"/>
+        <ellipse cx="600" cy="375" rx="4" ry="2.6"/>
+        <ellipse cx="712" cy="375" rx="4" ry="2.6"/>
+      </g>
+      <ellipse cx="600" cy="346" rx="120" ry="12" fill="#FFC9B8" opacity="0.22"/>
+    </g>
+
+    <!-- front slice -->
+    <ellipse cx="352" cy="374" rx="196" ry="30" fill="url(#tm-edge)"/>
+    <ellipse cx="352" cy="366" rx="196" ry="30" fill="url(#tm-flesh)"/>
+    <g clip-path="url(#tm-clipL)">
+      <g fill="#F6B7A4" opacity="0.85">
+        <ellipse cx="352" cy="366" rx="36" ry="9.5"/>
+        <ellipse cx="248" cy="360" rx="32" ry="8.5" transform="rotate(-7 248 360)"/>
+        <ellipse cx="456" cy="360" rx="32" ry="8.5" transform="rotate(7 456 360)"/>
+        <ellipse cx="286" cy="379" rx="28" ry="7.5" transform="rotate(5 286 379)"/>
+        <ellipse cx="418" cy="379" rx="28" ry="7.5" transform="rotate(-5 418 379)"/>
+      </g>
+      <g fill="#FFF0CE" opacity="0.92">
+        <ellipse cx="334" cy="364" rx="5.5" ry="3.2"/>
+        <ellipse cx="370" cy="368" rx="5.5" ry="3.2"/>
+        <ellipse cx="254" cy="359" rx="5" ry="3"/>
+        <ellipse cx="452" cy="361" rx="5" ry="3"/>
+        <ellipse cx="290" cy="380" rx="4.5" ry="2.8"/>
+        <ellipse cx="414" cy="380" rx="4.5" ry="2.8"/>
+      </g>
+      <!-- wet highlight -->
+      <ellipse cx="300" cy="350" rx="130" ry="13" fill="#FFD2C2" opacity="0.26"/>
+    </g>
+  </g>
+
+  <!-- ember bounce along the cut edges -->
+  <path d="M170 382 C280 400 420 400 520 392 C620 384 760 388 848 372"
+        fill="none" stroke="url(#tm-ember)" stroke-width="11" filter="url(#tm-glow)" opacity="0.75"/>
+</svg>

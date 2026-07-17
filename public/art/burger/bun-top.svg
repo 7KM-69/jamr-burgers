@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 800" width="1000" height="800" role="presentation">
+  <defs>
+    <linearGradient id="bt-crown" x1="0.25" y1="0" x2="0.75" y2="1">
+      <stop offset="0" stop-color="#F0C287"/>
+      <stop offset="0.32" stop-color="#D9A05C"/>
+      <stop offset="0.72" stop-color="#B87838"/>
+      <stop offset="1" stop-color="#8E5524"/>
+    </linearGradient>
+    <radialGradient id="bt-sheen" cx="0.34" cy="0.2" r="0.55">
+      <stop offset="0" stop-color="#FFF0D2" stop-opacity="0.85"/>
+      <stop offset="0.55" stop-color="#FFE0AE" stop-opacity="0.18"/>
+      <stop offset="1" stop-color="#FFD9A0" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="bt-lip" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#B87838"/>
+      <stop offset="1" stop-color="#7A4720"/>
+    </linearGradient>
+    <linearGradient id="bt-ember" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#FF4D1C" stop-opacity="0.9"/>
+      <stop offset="0.5" stop-color="#FFB020" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#FF4D1C" stop-opacity="0.75"/>
+    </linearGradient>
+    <filter id="bt-soft" x="-25%" y="-25%" width="150%" height="150%">
+      <feGaussianBlur stdDeviation="14"/>
+    </filter>
+    <filter id="bt-glow" x="-25%" y="-25%" width="150%" height="150%">
+      <feGaussianBlur stdDeviation="7"/>
+    </filter>
+    <clipPath id="bt-clip">
+      <path d="M150 302 C150 188 292 118 500 118 C708 118 850 188 850 302 Z"/>
+    </clipPath>
+  </defs>
+
+  <!-- contact shadow this layer casts on whatever sits beneath it -->
+  <ellipse cx="500" cy="309" rx="330" ry="20" fill="#000000" opacity="0.5" filter="url(#bt-soft)"/>
+
+  <!-- crown -->
+  <path d="M150 302 C150 188 292 118 500 118 C708 118 850 188 850 302 Z" fill="url(#bt-crown)"/>
+
+  <g clip-path="url(#bt-clip)">
+    <!-- baked sheen, top-left key light -->
+    <ellipse cx="410" cy="190" rx="330" ry="150" fill="url(#bt-sheen)"/>
+    <!-- the ember sits below and to the left: rim-light along the crown's underside -->
+    <path d="M150 302 C150 188 292 118 500 118 C708 118 850 188 850 302 Z"
+          fill="none" stroke="url(#bt-ember)" stroke-width="16" opacity="0.5" filter="url(#bt-glow)"
+          transform="translate(0 10)"/>
+    <!-- irregular bake mottling, so the dome is not a plastic gradient -->
+    <ellipse cx="255" cy="252" rx="70" ry="34" fill="#8E5524" opacity="0.13"/>
+    <ellipse cx="742" cy="236" rx="86" ry="40" fill="#8E5524" opacity="0.16"/>
+    <ellipse cx="560" cy="160" rx="94" ry="30" fill="#FFE7C0" opacity="0.12"/>
+    <ellipse cx="345" cy="288" rx="120" ry="26" fill="#7A4720" opacity="0.1"/>
+  </g>
+
+  <!-- toasted lip where the crown meets the lettuce -->
+  <path d="M150 300 C150 288 200 280 280 276 C360 272 440 270 500 270 C560 270 640 272 720 276 C800 280 850 288 850 300 C850 312 700 320 500 320 C300 320 150 312 150 300 Z"
+        fill="url(#bt-lip)" opacity="0.92"/>
+  <path d="M168 300 C260 288 380 283 500 283 C620 283 740 288 832 300"
+        fill="none" stroke="#F3CB94" stroke-width="3" opacity="0.35"/>
+
+  <!-- sesame. hand-placed, each one lit from the top-left, none identical -->
+  <g fill="#F6E3C2">
+    <g transform="rotate(-14 372 186)">
+      <ellipse cx="372" cy="186" rx="19" ry="11"/>
+      <ellipse cx="369" cy="183" rx="13" ry="6" fill="#FFF6E4" opacity="0.75"/>
+    </g>
+    <g transform="rotate(9 500 154)">
+      <ellipse cx="500" cy="154" rx="20" ry="11.5"/>
+      <ellipse cx="497" cy="151" rx="13" ry="6" fill="#FFF6E4" opacity="0.75"/>
+    </g>
+    <g transform="rotate(-25 626 176)">
+      <ellipse cx="626" cy="176" rx="18" ry="10.5"/>
+      <ellipse cx="623" cy="173" rx="12" ry="5.5" fill="#FFF6E4" opacity="0.7"/>
+    </g>
+    <g transform="rotate(21 288 240)">
+      <ellipse cx="288" cy="240" rx="18" ry="10"/>
+      <ellipse cx="285" cy="237" rx="12" ry="5" fill="#FFF6E4" opacity="0.6"/>
+    </g>
+    <g transform="rotate(-6 452 236)">
+      <ellipse cx="452" cy="236" rx="19" ry="11"/>
+      <ellipse cx="449" cy="233" rx="13" ry="5.5" fill="#FFF6E4" opacity="0.7"/>
+    </g>
+    <g transform="rotate(16 584 244)">
+      <ellipse cx="584" cy="244" rx="18" ry="10.5"/>
+      <ellipse cx="581" cy="241" rx="12" ry="5" fill="#FFF6E4" opacity="0.65"/>
+    </g>
+    <g transform="rotate(-31 716 236)">
+      <ellipse cx="716" cy="236" rx="17" ry="10"/>
+      <ellipse cx="713" cy="233" rx="11" ry="5" fill="#FFF6E4" opacity="0.6"/>
+    </g>
+    <g transform="rotate(4 372 306)" opacity="0.9">
+      <ellipse cx="372" cy="300" rx="17" ry="9.5"/>
+    </g>
+    <g transform="rotate(-12 664 300)" opacity="0.9">
+      <ellipse cx="664" cy="300" rx="17" ry="9.5"/>
+    </g>
+    <g transform="rotate(28 214 284)" opacity="0.85">
+      <ellipse cx="214" cy="284" rx="16" ry="9"/>
+    </g>
+    <g transform="rotate(-20 792 280)" opacity="0.85">
+      <ellipse cx="792" cy="280" rx="16" ry="9"/>
+    </g>
+  </g>
+</svg>
