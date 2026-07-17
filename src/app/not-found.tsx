@@ -94,11 +94,22 @@ export default function NotFound() {
           {copy.eyebrow}
         </p>
 
-        {/* `.num` on the row keeps the digits in Latin order in Arabic too. Each
-            character is its own masked line so they can be revealed in sequence. */}
-        <p className="num display flex text-display leading-none">
+        {/* An h1, not a p. This is the page's name, and it was the only route on the
+            site with no heading at all — someone navigating by headings landed here
+            and found nothing to land on. Caught by scripts/audit-rtl.mjs, which is
+            the reason that check exists.
+
+            The digits are split into per-character masked spans for the staggered
+            reveal, so the accessible name is assembled from fragments; aria-label
+            states it once, whole, instead of letting a reader spell out "4 0 4".
+
+            `.num` on the row keeps the digits in Latin order in Arabic too. */}
+        <h1
+          aria-label={copy.title}
+          className="num display flex text-display leading-none"
+        >
           {[...copy.title].map((char, i) => (
-            <span key={`${char}-${i}`} className="mask-line">
+            <span key={`${char}-${i}`} aria-hidden className="mask-line">
               <span
                 data-mask
                 className={`block will-change-transform ${
@@ -109,7 +120,7 @@ export default function NotFound() {
               </span>
             </span>
           ))}
-        </p>
+        </h1>
 
         {/* The last hairline of a fire that has gone out. scaleX from the centre,
             which is the one origin that needs no RTL flip. */}

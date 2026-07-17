@@ -9,6 +9,7 @@
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
     "shot": "node scripts/shot.mjs",
+    "audit:rtl": "node scripts/audit-rtl.mjs",
     "product-photos": "node scripts/product-photos.mjs",
     "validate-layer-art": "node scripts/validate-layer-art.mjs"
   },
