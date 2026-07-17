@@ -53,7 +53,10 @@ export function CheckoutField({
   const describedBy =
     [hint ? hintId : null, error ? errorId : null].filter(Boolean).join(' ') || undefined;
 
-  const surface = `w-full bg-ash-100 px-4 py-3.5 text-bone placeholder-ash-600 outline-none transition-colors duration-200 disabled:cursor-not-allowed disabled:opacity-60 border ${
+  // No `outline-none` — see AuthField. The site's flame :focus-visible ring is the
+  // keyboard focus signal; the ember border is the extra one. Killing the ring here
+  // would strand a keyboard user mid-checkout with no idea which field is active.
+  const surface = `w-full bg-ash-100 px-4 py-3.5 text-bone placeholder-ash-600 transition-colors duration-200 disabled:cursor-not-allowed disabled:opacity-60 border ${
     error ? 'border-ember' : 'border-ash-400 hover:border-ash-500 focus:border-ember'
   }`;
 

@@ -85,7 +85,13 @@ export function AuthField({
           inputMode={inputMode}
           aria-invalid={error ? true : undefined}
           aria-describedby={describedBy}
-          className={`w-full bg-ash-100 px-4 py-3.5 text-bone placeholder-ash-600 outline-none transition-colors duration-200 ${
+          // No `outline-none`. globals.css sets a 2px flame :focus-visible ring on
+          // every control and its own comment says focus is "never removed, always
+          // obvious" — suppressing it here, on the fields where a keyboard user most
+          // needs to know where they are, contradicted that. Keyboard focus now gets
+          // the site ring; the ember border is the extra signal, and mouse focus
+          // (:focus:not(:focus-visible)) still shows border only.
+          className={`w-full bg-ash-100 px-4 py-3.5 text-bone placeholder-ash-600 transition-colors duration-200 ${
             reveal ? 'pe-12' : ''
           } border ${
             error ? 'border-ember' : 'border-ash-400 hover:border-ash-500 focus:border-ember'
